@@ -1,0 +1,2 @@
+class OthersRevenue < ApplicationRecord
+end

@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  base_salary: 9.99
+  transport_subsidy: 9.99
+  initial_date: 2022-10-13
+  final_date: 2022-10-13
+
+two:
+  base_salary: 9.99
+  transport_subsidy: 9.99
+  initial_date: 2022-10-13
+  final_date: 2022-10-13

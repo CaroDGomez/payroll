@@ -1,0 +1,2 @@
+class RetentionDeduction < ApplicationRecord
+end
