@@ -5,8 +5,6 @@ class CreateExpenseCompanies < ActiveRecord::Migration[7.0]
       t.string :type
       t.decimal :percentage
       t.decimal :amount
-      t.date :initial_date
-      t.date :final_date
 
       t.timestamps
     end

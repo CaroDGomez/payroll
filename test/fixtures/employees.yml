@@ -2,12 +2,6 @@
 
 one:
   name: MyString
-  surname: MyString
   email: MyString
   password: MyString
-
-two:
-  name: MyString
-  surname: MyString
-  email: MyString
-  password: MyString
+  password_confirmation: MyString

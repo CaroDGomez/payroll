@@ -35,12 +35,12 @@ class EmployeesController < ApplicationController
   private
 
   def find_employee
-    @employee = Employee.find_by_employeename!(params[:_employeename])
+    @employee = Employee.find_by_id!(params[:id])
     rescue ActiveRecord::RecordNotFound
       render json: { errors: 'Employee not found' }, status: :not_found
   end
 
   def employee_params
-    params.permit(:name, :surname, :email, :password, :password_confirmation)
+    params.permit(:name, :email, :password, :password_confirmation, :role, :company_id)
   end
 end

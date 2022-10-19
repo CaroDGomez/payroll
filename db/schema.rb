@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_14_033641) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_19_022144) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "companies", force: :cascade do |t|
     t.string "name"
     t.string "nit"
@@ -18,22 +21,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_14_033641) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "contracts", force: :cascade do |t|
-    t.string "contract_type"
-    t.date "initial_date"
-    t.date "final_date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "employees", force: :cascade do |t|
     t.string "name"
-    t.string "surname"
     t.string "email"
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "role", default: 0, null: false
+    t.bigint "company_id", null: false
+    t.index ["company_id"], name: "index_employees_on_company_id"
   end
 
   create_table "expense_companies", force: :cascade do |t|
@@ -45,12 +41,29 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_14_033641) do
     t.date "final_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "company_id", null: false
+    t.bigint "employee_id", null: false
+    t.bigint "period_id", null: false
+    t.index ["company_id"], name: "index_expense_companies_on_company_id"
+    t.index ["employee_id"], name: "index_expense_companies_on_employee_id"
+    t.index ["period_id"], name: "index_expense_companies_on_period_id"
   end
 
   create_table "other_revenue", force: :cascade do |t|
     t.string "name"
     t.string "type"
     t.decimal "amount"
+    t.date "initial_date"
+    t.date "final_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "employee_id", null: false
+    t.bigint "period_id", null: false
+    t.index ["employee_id"], name: "index_other_revenue_on_employee_id"
+    t.index ["period_id"], name: "index_other_revenue_on_period_id"
+  end
+
+  create_table "periods", force: :cascade do |t|
     t.date "initial_date"
     t.date "final_date"
     t.datetime "created_at", null: false
@@ -64,6 +77,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_14_033641) do
     t.date "final_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "employee_id", null: false
+    t.bigint "period_id", null: false
+    t.index ["employee_id"], name: "index_retention_deductions_on_employee_id"
+    t.index ["period_id"], name: "index_retention_deductions_on_period_id"
   end
 
   create_table "settlements", force: :cascade do |t|
@@ -73,6 +90,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_14_033641) do
     t.date "final_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "company_id", null: false
+    t.bigint "employee_id", null: false
+    t.bigint "period_id", null: false
+    t.index ["company_id"], name: "index_settlements_on_company_id"
+    t.index ["employee_id"], name: "index_settlements_on_employee_id"
+    t.index ["period_id"], name: "index_settlements_on_period_id"
   end
 
   create_table "wages", force: :cascade do |t|
@@ -82,6 +105,23 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_14_033641) do
     t.date "final_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "employee_id", null: false
+    t.bigint "period_id", null: false
+    t.index ["employee_id"], name: "index_wages_on_employee_id"
+    t.index ["period_id"], name: "index_wages_on_period_id"
   end
 
+  add_foreign_key "employees", "companies"
+  add_foreign_key "expense_companies", "companies"
+  add_foreign_key "expense_companies", "employees"
+  add_foreign_key "expense_companies", "periods"
+  add_foreign_key "other_revenue", "employees"
+  add_foreign_key "other_revenue", "periods"
+  add_foreign_key "retention_deductions", "employees"
+  add_foreign_key "retention_deductions", "periods"
+  add_foreign_key "settlements", "companies"
+  add_foreign_key "settlements", "employees"
+  add_foreign_key "settlements", "periods"
+  add_foreign_key "wages", "employees"
+  add_foreign_key "wages", "periods"
 end

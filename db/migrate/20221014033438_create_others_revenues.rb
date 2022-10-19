@@ -4,8 +4,6 @@ class CreateOthersRevenues < ActiveRecord::Migration[7.0]
       t.string :name
       t.string :type
       t.decimal :amount
-      t.date :initial_date
-      t.date :final_date
 
       t.timestamps
     end

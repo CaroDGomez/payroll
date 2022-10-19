@@ -1,7 +1,9 @@
 class Employee < ApplicationRecord
+  belongs_to :company
+  
   has_secure_password
 
-  enum role: %i[employee accountant admin].freeze
+  enum role: %i[employee accountant].freeze
 
   validates :email, presence: true, uniqueness: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }

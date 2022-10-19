@@ -3,7 +3,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  resources :employees, param: :_employeename
+  resources :employees, param: :id
+  resources :company
   post '/auth/login', to: 'authentication#login'
   get '/*a', to: 'application#not_found'
 end
