@@ -43,4 +43,8 @@ class EmployeesController < ApplicationController
   def employee_params
     params.permit(:name, :email, :password, :password_confirmation, :role, :company_id)
   end
+
+  def create_salary
+
+  end
 end

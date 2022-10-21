@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   # root "articles#index"
   resources :employees, param: :id
   resources :company
+  resources :wage
+  resources :period
   post '/auth/login', to: 'authentication#login'
   get '/*a', to: 'application#not_found'
 end

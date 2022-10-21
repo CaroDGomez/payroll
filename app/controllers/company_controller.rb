@@ -4,6 +4,8 @@ class CompanyController < ApplicationController
   def index
     @companies = Company.all
     render json: @companies, status: :ok
+    @current_employee = Employee.find(@decoded[:employee_id])
+    puts @current_employee.role
   end
 
   def create
