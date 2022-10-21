@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_19_022144) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_21_163751) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -68,6 +68,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_19_022144) do
     t.date "final_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "company_id", null: false
+    t.index ["company_id"], name: "index_periods_on_company_id"
   end
 
   create_table "retention_deductions", force: :cascade do |t|
@@ -117,6 +119,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_19_022144) do
   add_foreign_key "expense_companies", "periods"
   add_foreign_key "other_revenue", "employees"
   add_foreign_key "other_revenue", "periods"
+  add_foreign_key "periods", "companies"
   add_foreign_key "retention_deductions", "employees"
   add_foreign_key "retention_deductions", "periods"
   add_foreign_key "settlements", "companies"
