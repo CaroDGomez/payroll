@@ -15,6 +15,6 @@ class PeriodController < ApplicationController
   private
 
   def period_params
-    params.permit(:initial_date, :final_date)
+    params.permit(:initial_date, :final_date, :company_id)
   end
 end

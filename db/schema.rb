@@ -37,8 +37,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_163751) do
     t.string "type"
     t.decimal "percentage"
     t.decimal "amount"
-    t.date "initial_date"
-    t.date "final_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "company_id", null: false
@@ -53,8 +51,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_163751) do
     t.string "name"
     t.string "type"
     t.decimal "amount"
-    t.date "initial_date"
-    t.date "final_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "employee_id", null: false
@@ -75,8 +71,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_163751) do
   create_table "retention_deductions", force: :cascade do |t|
     t.string "name"
     t.decimal "amount"
-    t.date "initial_date"
-    t.date "final_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "employee_id", null: false
@@ -88,8 +82,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_163751) do
   create_table "settlements", force: :cascade do |t|
     t.decimal "total_employee"
     t.decimal "total_company"
-    t.date "initial_date"
-    t.date "final_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "company_id", null: false
@@ -108,9 +100,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_163751) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "employee_id", null: false
-    t.bigint "period_id", null: false
     t.index ["employee_id"], name: "index_wages_on_employee_id"
-    t.index ["period_id"], name: "index_wages_on_period_id"
   end
 
   add_foreign_key "employees", "companies"
@@ -126,5 +116,4 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_163751) do
   add_foreign_key "settlements", "employees"
   add_foreign_key "settlements", "periods"
   add_foreign_key "wages", "employees"
-  add_foreign_key "wages", "periods"
 end

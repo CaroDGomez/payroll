@@ -22,5 +22,5 @@ class Period < ApplicationRecord
     if final_date < initial_date
       errors.add(:final_date, "must be after the start date")
     end
- end
+  end
 end
