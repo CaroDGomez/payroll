@@ -3,12 +3,13 @@ class CompanyController < ApplicationController
 
   def index
     @companies = Company.all
-    
-    @current_employee = Employee.find(@decoded[:employee_id])
-    puts @current_employee.role
+
+    # @current_employee = Employee.find(@decoded[:employee_id])
+    # puts @current_employee.role
   end
 
   def create
+    # @company = CreateCompanyService.call(params[:name], params[:nit])
     @company = Company.new(company_params)
     if @company.save
       render json: @company, status: :created
