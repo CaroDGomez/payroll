@@ -1,10 +1,12 @@
-class CreateCompanyService < ApplicationService
-  attr_reader :name, :nit
+require_relative '../company/application_service'
 
-  def initialize(name, nit)
+class CreateCompanyService < ApplicationService
+  attr_reader :name, :nit, :current_employee
+
+  def initialize(name, nit, current_employee)
     @name = name
     @nit = nit
-    @errors = []
+    @current_employee = current_employee
   end
 
   def call
@@ -14,15 +16,21 @@ class CreateCompanyService < ApplicationService
   private
 
   def create_company
-    @company = Company.new
-    @company.assign_attributes(name: @name, nit: @nit)
+    company = Company.new(name: @name, nit: @nit)
 
-    if @company.save
-      render json: @company, status: :created
+    if company.save
+      set_user_owner(company.id)
+      return company
     else
-      render json: { errors: @company.errors.full_messages },
-             status: :unprocessable_entity
+      return company.errors.messages
     end
+  end
+
+  def set_user_owner(id)
+    employee = Employee.find_by_id!(@current_employee.id)
+    employee.role = "owner"
+    employee.company_id = id
+    employee.save
   end
 
 end

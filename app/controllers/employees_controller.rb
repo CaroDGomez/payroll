@@ -21,6 +21,10 @@ class EmployeesController < ApplicationController
     end
   end
 
+  def create_employee
+    
+  end
+
   def update
     unless @employee.update(employee_params)
       render json: { errors: @employee.errors.full_messages },
@@ -41,7 +45,7 @@ class EmployeesController < ApplicationController
   end
 
   def employee_params
-    params.permit(:name, :email, :password, :password_confirmation, :role, :company_id)
+    params.permit(:name, :email, :password)
   end
 
   def create_salary

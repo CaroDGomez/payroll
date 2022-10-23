@@ -1,13 +1,16 @@
+require_relative '../services/period/create_period_service'
+
 class PeriodController < ApplicationController
   before_action :authorize_request
 
   def create
-    @period = Period.new(period_params)
+    @current_employee = Employee.find(@decoded[:employee_id])
+    @period = CreatePeriodService.call(period_params[:month], period_params[:year], @current_employee)
 
-    if @period.save
+    if @period.is_a?(Period)
       render json: @period, status: :ok
     else
-      render json: { errors: @period.errors.full_messages },
+      render json: { errors: @period },
              status: :unprocessable_entity
     end
   end
@@ -15,6 +18,6 @@ class PeriodController < ApplicationController
   private
 
   def period_params
-    params.permit(:initial_date, :final_date, :company_id)
+    params.permit(:month, :year)
   end
 end

@@ -28,7 +28,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_163751) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "role", default: 0, null: false
-    t.bigint "company_id", null: false
+    t.bigint "company_id"
     t.index ["company_id"], name: "index_employees_on_company_id"
   end
 

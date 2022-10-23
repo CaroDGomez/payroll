@@ -1,21 +1,20 @@
+require_relative '../services/company/create_company_service'
+
 class CompanyController < ApplicationController
-  before_action :authorize_request, except: :create
+  before_action :authorize_request
 
   def index
     @companies = Company.all
-
-    # @current_employee = Employee.find(@decoded[:employee_id])
-    # puts @current_employee.role
   end
 
   def create
-    # @company = CreateCompanyService.call(params[:name], params[:nit])
-    @company = Company.new(company_params)
-    if @company.save
-      render json: @company, status: :created
+    @current_employee = Employee.find(@decoded[:employee_id])
+    @company = CreateCompanyService.call(company_params[:name], company_params[:nit], @current_employee)
+
+    if @company.is_a?(Company)
+      render :create, status: :created
     else
-      render json: { errors: @company.errors.full_messages },
-             status: :unprocessable_entity
+      render :errors, status: :unprocessable_entity
     end
   end
 

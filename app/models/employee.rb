@@ -1,5 +1,5 @@
 class Employee < ApplicationRecord
-  belongs_to :company
+  belongs_to :company, optional: true
   has_many :wages
   has_many :other_revenues
   has_many :settlements
@@ -8,7 +8,7 @@ class Employee < ApplicationRecord
 
   has_secure_password
 
-  enum role: %i[employee accountant].freeze
+  enum role: %i[employee accountant owner].freeze
 
   validates :email, presence: true, uniqueness: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
